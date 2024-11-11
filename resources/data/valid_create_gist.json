@@ -1,0 +1,9 @@
+{
+  "description": "Valid Gist QA",
+  "public": true,
+  "files": {
+    "example.txt": {
+      "content": "This is a test file."
+    }
+  }
+}
