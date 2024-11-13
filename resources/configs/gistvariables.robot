@@ -2,6 +2,7 @@
 ${BASE_URL}                         https://api.github.com
 ${GET_GISTS_URI}                    /gists
 ${GET_SINGLE_GIST_URI}              /gists/
+${CREATE_GIST_URI}
 ${PROJECT_ROOT}                     ${EXECDIR}/gistProject
 
 #status codes

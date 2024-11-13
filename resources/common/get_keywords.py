@@ -10,13 +10,6 @@ from shared import generate_headers, setup_gist_session
 Vars = _Variables()
 
 
-# def extract_gist_id(response):
-#     """Extracts the gist ID from a successful response."""
-#     if response.status_code == 200 and isinstance(response.json(), list):
-#         return response.json()[0].get("id")
-#         logger.info("asdfgh: " +response.json()[0].get("id"))
-#     return None
-
 
 def test_get_gists(expected_status):
     """
@@ -61,6 +54,7 @@ def test_get_single_gist(gist_id, expected_status):
     if str(response.status_code) == str(expected_status):
         assert "id" in response.json(), "ID not found in response"
         assert response.json()["id"] == gist_id, f"Expected gist ID {gist_id}, got {response.json()['id']}"
+    return   response
 
 def test_get_invalid_gist(expected_status):
     """

@@ -41,7 +41,7 @@ GIST_03 Get Non-Existent Gist
 
 
 
-
+#
 #GIST_01 Get All Gists
 #    [Documentation]    This test fetches all public gists
 #    [Tags]    getgist  positive   getallgist
@@ -50,17 +50,14 @@ GIST_03 Get Non-Existent Gist
 #    Should Be Equal As Numbers    ${response.status_code}    200
 #    Log To Console    ${response.json()}
 #    should be equal as strings              ${response.json()}[status]           success
-#    should be equal                         ${response.json()}[data][0][hub]     gdchgfm
-#    Should Contain    ${response.json()[0]}    id    # Assert Gist data includes "id" field
-#    set test variable                       ${first_gist_id}                     ${response.json()}[data][1][driver_Uuid]
-
+#
 #GIST_02 Get Single Gist
 #    [Documentation]    This test fetches a single gist by ID
 #    [Tags]    getgist  positive   getsinglegist
 #    ${response}=      Get Request    github    ${GET_SINGLE_GIST_URI}/${first_gist_id}
 #    Should Be Equal As Numbers    ${response.status_code}    200
 #    Log To Console    ${response.json()}
-
+#
 #GIST_03 Get Non-Existent Gist
 #    [Documentation]    This test verifies response for non-existent gist
 #    ...  Expected Status Code 404

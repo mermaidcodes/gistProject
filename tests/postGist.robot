@@ -1,29 +1,25 @@
 *** Settings ***
-Documentation     GIST - Get Gist Tests
+Documentation     GIST - Post Gist Tests
+Library           String
 Library           RequestsLibrary
-Resource          ${EXECDIR}/resources/common/shared.robot
+Library           ${EXECDIR}/resources/common/post_keywords.py
 Library           ${EXECDIR}/resources/common/get_keywords.py
-Test Setup        Setup Gist Session      ${GITHUB_TOKEN}
-#Test Teardown     Delete All Sessions
+Library           ${EXECDIR}/resources/common/shared.py
+Resource          ${EXECDIR}/resources/common/shared.robot
 
-*** Variables ***
-${DESCRIPTION}   "QA-CREATENEWGIST" + str(random.randint(1, 10000))
+
+
 
 *** Test Cases ***
 GIST_03 Create Gist from JSON File
     [Documentation]    This test creates a new gist using data from a JSON file (valid_create_gist.json).
     [Tags]             postgist    positive    postvalidgist
-    ${gist_id}=        Test Create Gist    expected_status=${EXPECTED_STATUS_CREATED}
-    Log To Console     Created Gist ID: ${gist_id}
+    ${description} =      Generate Random String    20                      [LETTERS]
+    ${gist_id}=           Test Create Gist          ${description}          expected_status=${EXPECTED_STATUS_CREATED}
+    Log To Console        Created Gist ID:          ${gist_id}
 
-    #Verify if gist is created
-    ${response}=        Test Get Gists    expected_status=${EXPECTED_STATUS_OK}
-    Set Test Variable    ${gist_id}
-    Should Contain       ${response}      ${DESCRIPTION}
-
-
-#GIST_04 Create Gist (Invalid Data)
-#    [Documentation]    This test attempts to create a gist with invalid data, expecting a validation error.
-#    [Tags]             postgist    negative    postinvalidgist
-#    ${response}=       Test Create Gist Invalid    expected_status=${EXPECTED_STATUS_UNPROCESSABLE}    payload=${INVALID_PAYLOAD}
-#    Log To Console     ${response}
+    #Verify if gist is created with its content
+    ${response}=          Test Get Single Gist      ${gist_id}              expected_status=${EXPECTED_STATUS_OK}
+    Should Be Equal       ${response.json()}[id]                            ${gist_id}
+    Should Be Equal       ${response.json()}[public]                        ${FALSE}
+    Should Be Equal       ${response.json()}[description]                   ${description}
